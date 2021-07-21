@@ -66,6 +66,7 @@ function createHole(x){
 function swift() {
     ctx.clearRect(0, 125, 700, 250);
     box.draw();
+    if(box.y==215){ new Audio("when-604.mp3").play();}
     console.log(status);
     if (status == "floor") {
         if (box.y - box.vy < 125) {
@@ -123,7 +124,7 @@ function end(){
 
 function displayScore() {
     distance = 60*sec; //in px //As animation is in 60 frames per sec
-    score = Math.floor(distance<2000 ? distance : distance<4000 ? distance*1.2 : distance<6000 ? distance*1.4 : dsitance*1.6);
+    score = Math.floor(distance<4000 ? distance : distance<6000 ? distance*1.2 : distance<8000 ? distance*1.4 : distance*1.6);
     hs = localStorage.getItem("HiSc");    
     if (hs == Infinity) {
         hs = score;
