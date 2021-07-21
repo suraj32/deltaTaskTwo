@@ -1,33 +1,3 @@
-/*const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-
-ctx.fillStyle = 'rgb(200,0,0)';
-ctx.fillRect(250, 100, 50, 50);
-
-ctx.fillStyle = 'rgba(0,200,0,0.5)';
-ctx.fillRect(230, 80, 50, 50);
-
-ctx.beginPath();
-ctx.moveTo(175, 50);
-ctx.lineTo(200, 75);
-ctx.lineTo(200, 25);
-//ctx.closePath();
-//ctx.stroke();
-ctx.fill();
-
-ctx.beginPath();
-    ctx.arc(75, 75, 50, 0, Math.PI * 2, true); // Outer circle
-    ctx.moveTo(110, 75);
-    ctx.arc(75, 75, 35, 0, Math.PI, true);  // Mouth (clockwise)
-    ctx.moveTo(65, 85);
-    ctx.arc(60, 85, 5, 0, Math.PI * 2, true);  // Left eye
-    ctx.moveTo(95, 85);
-    ctx.arc(90, 85, 5, 0, Math.PI * 2, true);  // Right eye
-    ctx.stroke();
-
-var p = new Path2D('M10 10 h 80 v 80 h -80 Z');
-ctx.stroke(p);*/
-
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var raf;
