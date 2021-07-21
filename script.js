@@ -1,6 +1,7 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
-var raf;
+var glide;
+var speed=1;
 
 ctx.fillRect(0, 0, 700, 125);
 ctx.fillRect(0, 375, 700, 125);
@@ -20,12 +21,37 @@ var hole = {
     y: 375,
     vx: 2,
     draw: function () {
+        speed = sec<20 ? 1:sec<40 ? 2:sec<80 ? 3:sec<120 ? 4:6
+        console.log(speed);
         ctx.fillStyle = 'rgb(255,255,255)';
         ctx.fillRect(this.x, this.y, 125, 125);
         //console.log("hole");
     }
 };
 status = "floor";
+
+let sec=0,t=0;
+function timer(){
+    sec+=0.1;
+}
+var start = document.getElementById('start');
+start.addEventListener('click', function () {
+    interval = window.setInterval(timer,100);
+    start.style.display = "none";
+    glide = window.requestAnimationFrame(move);
+});
+
+var flip;
+canvas.addEventListener('click', function () {
+    flip = window.requestAnimationFrame(swift);
+    console.log(status);
+});
+document.body.addEventListener('keydown', function (e) {
+    if(e.keyCode == 32){
+        flip = window.requestAnimationFrame(swift);
+        console.log(status);
+    }
+});
 
 function move() {
     ctx.fillStyle = 'black';
@@ -41,7 +67,7 @@ function move() {
         createHole(Math.floor(Math.random()*10));
     }
 }
-let rafCount=0;
+
 function createHole(x){
     if (x<5 && hole.x==700) {
         hole.y = 375;
@@ -50,13 +76,13 @@ function createHole(x){
         hole.y = 0;
     }
     if (hole.x - hole.vx < -125) {
-        window.cancelAnimationFrame(raf);
+        window.cancelAnimationFrame(glide);
         hole.x=700;
-        raf = window.requestAnimationFrame(move);
+        glide = window.requestAnimationFrame(move);
     }
     else {
-        hole.x -= hole.vx;
-        raf = window.requestAnimationFrame(move);
+        hole.x -= hole.vx*speed;
+        glide = window.requestAnimationFrame(move);
     }
     if(((box.x+74)>hole.x && (box.x+75)<hole.x+125 && (((box.y-125)==hole.y) || (box.y+75)==hole.y)) ){
             end();
@@ -90,29 +116,6 @@ function swift() {
     }
 }
 
-let sec=0,t=0;
-function timer(){
-    sec+=0.1;
-}
-var start = document.getElementById('start');
-start.addEventListener('click', function () {
-    interval = window.setInterval(timer,100);
-    start.style.display = "none";
-    raf = window.requestAnimationFrame(move);
-});
-
-var flip;
-canvas.addEventListener('click', function () {
-    flip = window.requestAnimationFrame(swift);
-    console.log(status);
-});
-document.body.addEventListener('keydown', function (e) {
-    if(e.keyCode == 32){
-        flip = window.requestAnimationFrame(swift);
-        console.log(status);
-    }
-});
-
 box.draw();
 hole.draw();
 
@@ -121,18 +124,19 @@ modal.style.display = "none";
 function end(){
     console.log("...intersection...");
     window.cancelAnimationFrame(flip);
-    window.cancelAnimationFrame(raf);
+    window.cancelAnimationFrame(glide);
     window.clearInterval(interval);
     console.log(sec);
     new Audio("Disgruntled Gramophone.mp3").play();
     modal.style.display = "block";
     displayScore();
 }
-
+let r;
 function displayScore() {
     distance = 60*sec; //in px //As animation is in 60 frames per sec
-    score = Math.floor(distance<4000 ? distance : distance<6000 ? distance*1.2 : distance<8000 ? distance*1.4 : distance*1.6);
-    hs = localStorage.getItem("HiSc");    
+    r = distance<1200 ? 1 : distance<2400 ? 1.5 : distance<4800 ? 2 : distance<7200 ? 2.5:3;
+    score = distance*r;
+    hs = localStorage.getItem("HiSc");
     if (hs == Infinity) {
         hs = score;
     } else if (score > hs) {
