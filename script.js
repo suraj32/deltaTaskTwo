@@ -58,7 +58,7 @@ function createHole(x){
         hole.x -= hole.vx;
         raf = window.requestAnimationFrame(move);
     }
-    if(((box.x+74)==hole.x && (box.y+75)==hole.y) || ((box.x+74)==hole.x && (box.y-125)==hole.y)){
+    if(((box.x+74)>hole.x && (box.x+75)<hole.x+125 && (((box.y-125)==hole.y) || (box.y+75)==hole.y)) ){
             end();
         }
 }
@@ -101,9 +101,16 @@ start.addEventListener('click', function () {
     raf = window.requestAnimationFrame(move);
 });
 
+var flip;
 canvas.addEventListener('click', function () {
     flip = window.requestAnimationFrame(swift);
     console.log(status);
+});
+document.body.addEventListener('keydown', function (e) {
+    if(e.keyCode == 32){
+        flip = window.requestAnimationFrame(swift);
+        console.log(status);
+    }
 });
 
 box.draw();
