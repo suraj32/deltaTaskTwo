@@ -135,7 +135,7 @@ let r;
 function displayScore() {
     distance = 60*sec; //in px //As animation is in 60 frames per sec
     r = distance<1200 ? 1 : distance<2400 ? 1.5 : distance<4800 ? 2 : distance<7200 ? 2.5:3;
-    score = distance*r;
+    score = Math.floor(distance*r);
     hs = localStorage.getItem("HiSc");
     if (hs == Infinity) {
         hs = score;
