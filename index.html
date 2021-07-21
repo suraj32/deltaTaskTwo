@@ -8,7 +8,13 @@
     </head>
     <body>
         <button id="start">Start!</button><br>
-        <canvas id="canvas" width="700px" height="500px"></canvas>
+        <canvas id="canvas" width="700px" height="500px"></canvas><br>
+        <div id="modal">
+            <p style="font-size: 20px;color: goldenrod">👾 GAME OVER</p>
+            <p id="score" style="font-size: 15px;color: rgb(24, 141, 20)">-</p>
+            <p id="highscore" style="font-size: 15px;color: rgb(24, 141, 20)">-</p>
+            <button onclick="replay()">Replay</button><br>
+        </div>
         <script src="script.js"></script>
     </body>
 </html>
