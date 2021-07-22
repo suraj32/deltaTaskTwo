@@ -40,3 +40,14 @@ button:active {
     background-color: rgb(35, 139, 224);
     box-shadow: 0 2px #666;
 }
+#modal{
+    margin: auto;
+    padding: 10px;
+    border: 10px solid #888;
+    position: fixed; /* Stay in place */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0,0,0,0.3); /* Black w/ opacity */
+}
