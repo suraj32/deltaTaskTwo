@@ -16,7 +16,28 @@ var box = {
     vy: 5,
     draw: function () {
         ctx.fillStyle = 'rgb(30,89,177)';
-        ctx.fillRect(this.x, this.y, 75, 75);
+        if (status=='floor'){
+            ctx.beginPath();
+            ctx.moveTo(this.x+10,this.y);
+            ctx.lineTo(this.x+70,this.y);
+            ctx.lineTo(this.x+75,this.y+75);
+            ctx.lineTo(this.x,this.y+75);
+            ctx.fill();
+        }
+        else{
+            ctx.beginPath();
+            ctx.moveTo(this.x,this.y);
+            ctx.lineTo(this.x+75,this.y);
+            ctx.lineTo(this.x+70,this.y+75);
+            ctx.lineTo(this.x+10,this.y+75);
+            ctx.fill();
+        }
+        /*ctx.beginPath();
+        ctx.moveTo(this.x+5,this.y);
+        ctx.lineTo(this.x+65,this.y);
+        ctx.lineTo(this.x+75,this.y+75);
+        ctx.lineTo(this.x,this.y+75);
+        ctx.fill();*/
     }
 };
 var hole = {
@@ -102,7 +123,7 @@ function createHole(x) {
         hole.x -= hole.vx * speed;//speed varies with time
         glideHole = window.requestAnimationFrame(moveHole);
     }
-    //Intersection
+    //Intersection check
     if (((box.x + 74) > hole.x && (box.x + 75) < hole.x + 125 && (((box.y - 125) == hole.y) || (box.y + 75) == hole.y))) {
         end();
     }
@@ -151,10 +172,10 @@ function createObstacle(m) {
         glideBall = window.requestAnimationFrame(moveObstacle);
     }
     var d = Math.pow(Math.pow((box.x + 37.5 - obstacle.x), 2) + Math.pow((box.y + 37.5 - obstacle.y), 2), 0.5);
-    //Collision
-    if (((box.x + 74 == Math.floor(obstacle.x) - 25) && (d < 72.887)) || ((box.y == Math.floor(obstacle.y) - 24) && (d < 72.887)) || ((box.y + 75 == Math.floor(obstacle.y) - 24) && (d < 72.887))
-        || Math.floor(Math.pow(Math.pow((box.x - obstacle.x), 2) + Math.pow((box.y - obstacle.y), 2), 0.5)) == 25
-        || Math.floor(Math.pow(Math.pow((box.x + 75 - obstacle.x), 2) + Math.pow((box.y - obstacle.y), 2), 0.5)) == 25
+    //Collision check
+    if (((box.x + 73 == Math.floor(obstacle.x) - 25) && (d < 70)) || ((box.y == Math.floor(obstacle.y) - 24) && (d < 70)) || ((box.y + 72 == Math.floor(obstacle.y) - 24) && (d < 70))
+        || Math.floor(Math.pow(Math.pow((box.x - obstacle.x), 2) + Math.pow((box.y+5 - obstacle.y), 2), 0.5)) == 25
+        || Math.floor(Math.pow(Math.pow((box.x + 73 - obstacle.x), 2) + Math.pow((box.y - obstacle.y), 2), 0.5)) == 25
         || Math.floor(Math.pow(Math.pow((box.x - obstacle.x), 2) + Math.pow((box.y + 75 - obstacle.y), 2), 0.5)) == 25
         || Math.floor(Math.pow(Math.pow((box.x + 75 - obstacle.x), 2) + Math.pow((box.y + 75 - obstacle.y), 2), 0.5)) == 25) {
         end();
@@ -162,8 +183,12 @@ function createObstacle(m) {
 }
 
 function swift() {
-    //ctx.scale(1,-1);
     ctx.clearRect(0, 125, 700, 250);
+    /*ctx.save();
+    ctx.scale(-1,-1);
+    ctx.translate(0,300);
+    ctx.restore();
+    Above method should made the object to flip but couldnt figure out whats wrong*/
     box.draw();
     //hole.draw();
     obstacle.draw();
